@@ -1,4 +1,5 @@
-'use strict';
+import ParseVillage from './ParseVillage.js';
+import Labels from './Labels.js';
 
 const btnPrint = document.querySelector('#button-print');
 const fileField = document.querySelector('#input-file');
@@ -154,21 +155,6 @@ function printLabels(params) {
     },500);
 }
 
-function formatDate(date) {
-  let arDate = date.split('-');
-  return `${arDate[2]}.${arDate[1]}.${arDate[0]}`
-}
-
-function renderTitleSelect() {
-  selectTitle.innerHTML = `<option></option>`;;
-  
-  for(let key in labelData) {
-    selectTitle.innerHTML += `
-    <option value=${key}>${labelData[key].title}</option>
-    `;
-  }
-}
-
 function calculateEditorialPart(data, totalCount) {
   let sum = 0;
   for(let item of data) {
@@ -215,6 +201,21 @@ function validate(form) {
   return flag;
 }
 
+function formatDate(date) {
+  let arDate = date.split('-');
+  return `${arDate[2]}.${arDate[1]}.${arDate[0]}`
+}
+
+function renderTitleSelect() {
+  selectTitle.innerHTML = `<option></option>`;;
+  
+  for(let key in labelData) {
+    selectTitle.innerHTML += `
+    <option value=${key}>${labelData[key].title}</option>
+    `;
+  }
+}
+
 fileField.addEventListener('change', handleFile, false);
 
 request('load')
@@ -235,7 +236,8 @@ request('load')
             maxItemsInPack: 50,
             data: labelData[labelForm.elements.title.value].data
           };
-          generateLabels(params);
+          let label = new Labels(params);
+          // generateLabels(params);
         }        
       });
     };

@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bulma.min.css">
+    <script src=js/script.js?<?=time()?> defer type="module"></script>
     <script lang="javascript" src="js/xlsx.full.min.js"></script>
-    <script src=js/script.js?<?=time()?> defer></script>
     <title>Печать газетных ярлыков</title>
 </head>
 <body>
