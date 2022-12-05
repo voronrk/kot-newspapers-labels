@@ -1,0 +1,30 @@
+@page {
+    size: landscape;
+    margin: 1cm 1cm 1cm 1cm;
+}
+
+.table {
+    width: 277mm;
+    height: 185mm;
+    border: 2px solid black;
+}
+
+.table.is-bordered td {
+    border: 2px solid black;
+}
+
+.zakaz {
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    width: 100px;
+}
+
+.np-title {
+    border-top:0px !important;
+    border-bottom:0px !important;
+}
+
+img {
+    width: 120px;
+    margin: 20px;
+}
