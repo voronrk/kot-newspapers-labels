@@ -21,47 +21,6 @@ async function request(method, data=[]) {
   return await response.json();
 }
 
-function getFileName_DEPRECATED(refString) {
-  switch (refString){
-    case 'январь':
-      return 'january';
-    break;
-    case 'февраль':
-      return 'february';
-    break;
-    case 'март':
-      return 'march';
-    break;
-    case 'апрель':
-      return 'april';
-    break;
-    case 'май':
-      return 'may';
-    break;
-    case 'июнь':
-      return 'june';
-    break;
-    case 'июль':
-      return 'july';
-    break;
-    case 'август':
-      return 'august';
-    break;
-    case 'сентябрь':
-      return 'september';
-    break;
-    case 'октябрь':
-      return 'october';
-    break;
-    case 'ноябрь':
-      return 'november';
-    break;
-    case 'декабрь':
-      return 'december';
-    break;
-  }  
-}
-
 function decChar(c) {
   return String.fromCharCode(c.charCodeAt(0) - 1);
 }
@@ -146,10 +105,7 @@ function handleFile(e) {
   reader.onload = function(e) {
     var data = new Uint8Array(e.target.result);
     var workbook = XLSX.read(data, {type: 'array'});
-      // console.log(workbook);
-      // console.log(workbook.Sheets['Лист1']);
       parse(workbook.Sheets['Лист1']);
-    /* DO SOMETHING WITH workbook HERE */
   };
   reader.readAsArrayBuffer(f);
 };
@@ -176,10 +132,10 @@ return view;
 function printLabels(params) {
   const viewPrint = document.createElement('div');
   for(let item of params.data) {
-    console.log(item.labels200Count)
+    console.log(item.labelsFullPackCount)
     let i=0;
-    while(i<item.labels200Count) {
-      viewPrint.innerHTML += renderLabel(params, item.title, 200);
+    while(i<item.labelsFullPackCount) {
+      viewPrint.innerHTML += renderLabel(params, item.title, params.maxItemsInPack);
     i++;
     }
     viewPrint.innerHTML += renderLabel(params, item.title, item.labelTail);
@@ -224,8 +180,8 @@ function calculateEditorialPart(data, totalCount) {
 function generateLabels(params) {
   params.data.push({title:'Редакция', value: calculateEditorialPart(params.data, params.totalCount)})
   for(let item of params.data) {
-    item['labels200Count'] = Math.floor(item.value/200);
-    item['labelTail'] = item.value%200;
+    item['labelsFullPackCount'] = Math.floor(item.value/params.maxItemsInPack);
+    item['labelTail'] = item.value%params.maxItemsInPack;
   }
   console.log(params);
   printLabels(params);
@@ -276,6 +232,7 @@ request('load')
             orderNum: labelForm.elements.ordernum.value,
             date: formatDate(labelForm.elements.date.value),
             totalCount: labelForm.elements.count.value,
+            maxItemsInPack: 50,
             data: labelData[labelForm.elements.title.value].data
           };
           generateLabels(params);
