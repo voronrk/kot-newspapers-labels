@@ -3,20 +3,8 @@
     margin: 1cm 1cm 1cm 1cm;
 }
 
-.table {
-    width: 277mm;
-    height: 185mm;
-    border: 2px solid black;
-}
-
 .table.is-bordered td {
     border: 2px solid black;
-}
-
-.zakaz {
-    transform: rotate(-90deg);
-    white-space: nowrap;
-    width: 100px;
 }
 
 .np-title {
@@ -24,7 +12,36 @@
     border-bottom:0px !important;
 }
 
-img {
+.table-A4 {
+    width: 277mm;
+    height: 185mm;
+    border: 2px solid black;
+}
+
+.zakaz-A4 {
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    width: 100px;
+}
+
+.img-A4 {
     width: 120px;
     margin: 20px;
+}
+
+.table-A6 {
+    width: 128mm;
+    height: 83mm;
+    border: 2px solid black;
+}
+
+.zakaz-A6 {
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    width: 100px;
+}
+
+.img-A6 {
+    width: 120px;
+    margin: 10px;
 }

@@ -111,68 +111,6 @@ function handleFile(e) {
   reader.readAsArrayBuffer(f);
 };
 
-function renderLabel(params, title, quantity) {
-  let view = `
-  <table class="table is-bordered has-text-centered">
-  <tr>
-      <td rowspan="6" class="py-6 is-vcentered"><img src="img/pic.png"></td>
-      <td class="has-text-weight-bold is-size-3">Не бросать!</td>
-      <td rowspan="6" class="is-vcentered p-0"><div class="has-text-weight-bold is-size-2 zakaz">Заказ ${params.orderNum}</div></td>
-  </tr>
-  <tr><td class="np-title is-size-3">Вятский издательский дом, КОГАУ</td></tr>
-  <tr><td class="has-text-weight-bold is-size-1 p-0 np-title"><span>${params.title}</span><br> № ${params.num} от ${params.date}<br><br>${title}</td></tr>
-  <tr><td class="has-text-right np-title is-size-3">В пачке <span class="is-size-2 has-text-weight-bold">${quantity}</span> экз.</td></tr>
-  <tr><td class="is-size-4">ООО "Элефант"<br>
-  Россия, 610004, г. Киров, ул. Ленина, 2Б</td></tr>
-  <tr><td class="has-text-weight-bold is-size-4">2022</td></tr>        
-</table>
-`;
-return view;
-}
-
-function printLabels(params) {
-  const viewPrint = document.createElement('div');
-  for(let item of params.data) {
-    console.log(item.labelsFullPackCount)
-    let i=0;
-    while(i<item.labelsFullPackCount) {
-      viewPrint.innerHTML += renderLabel(params, item.title, params.maxItemsInPack);
-    i++;
-    }
-    viewPrint.innerHTML += renderLabel(params, item.title, item.labelTail);
-  };
-
-  const WinPrint = window.open('','','left=50,top=50,width=1920,height=1080,toolbar=0,scrollbars=1,status=0');
-    WinPrint.document.write(`<link rel="stylesheet" href="../css/bulma.min.css">`);
-    WinPrint.document.write(`<link rel="stylesheet" href="../css/printstyle.css">`);
-    WinPrint.document.write(viewPrint.innerHTML);
-    WinPrint.document.close();
-    WinPrint.focus();
-    setTimeout(()=> {
-      WinPrint.print();
-      // WinPrint.close();
-      // labelForm.reset();
-    },500);
-}
-
-function calculateEditorialPart(data, totalCount) {
-  let sum = 0;
-  for(let item of data) {
-    sum += +item.value;
-  };
-  return totalCount - sum;
-}
-
-function generateLabels(params) {
-  params.data.push({title:'Редакция', value: calculateEditorialPart(params.data, params.totalCount)})
-  for(let item of params.data) {
-    item['labelsFullPackCount'] = Math.floor(item.value/params.maxItemsInPack);
-    item['labelTail'] = item.value%params.maxItemsInPack;
-  }
-  console.log(params);
-  printLabels(params);
-}
-
 function validate(form) {
   let flag = true;
   for(let warning of warnings) {
@@ -237,7 +175,6 @@ request('load')
             data: labelData[labelForm.elements.title.value].data
           };
           let label = new Labels(params);
-          // generateLabels(params);
         }        
       });
     };
