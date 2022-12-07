@@ -72,13 +72,15 @@ export default class Labels {
                 };
                 i++;
             }
-            if (leftColumn) {
-                columnLeft.innerHTML += this.renderLabelA6(item.title, item.labelTail);
-                leftColumn = !leftColumn;
-            } else {
-                columnRight.innerHTML += this.renderLabelA6(item.title, item.labelTail);
-                leftColumn = !leftColumn;
-            };
+            if(item.labelTail) {
+                if (leftColumn) {
+                    columnLeft.innerHTML += this.renderLabelA6(item.title, item.labelTail);
+                    leftColumn = !leftColumn;
+                } else {
+                    columnRight.innerHTML += this.renderLabelA6(item.title, item.labelTail);
+                    leftColumn = !leftColumn;
+                };
+            };            
         };
         view.appendChild(columnLeft);
         view.appendChild(columnRight);
@@ -111,7 +113,9 @@ export default class Labels {
         this.data.data.push({title:'Редакция', value: this.calculateEditorialPart()})
         for(let item of this.data.data) {
             item['labelsFullPackCount'] = Math.floor(item.value/this.data.maxItemsInPack);
-            item['labelTail'] = item.value % this.data.maxItemsInPack;
+            if (item.value % this.data.maxItemsInPack) {
+                item['labelTail'] = item.value % this.data.maxItemsInPack
+            };
         }
         console.log(this.data);
         switch (this.data.size) {
