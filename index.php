@@ -17,6 +17,14 @@
 
         <div class="box is-hidden" id="labels-wrapper">
             <div class="title is-size-5">Печать ярлыков</div>
+
+            <div class="field">
+                <label class="label">Заказчик</label>
+                <div class="select">
+                    <select id="select-type" ></select>
+                </div>
+            </div>
+
             <form class="form mt-4" id="label-form">
                 <div class="field is-grouped">
                     <div class="field">

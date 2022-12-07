@@ -11,10 +11,11 @@ const load = document.querySelector('#load');
 // fileField.value = '';
 // let separatedData = [];
 let labelData = [];
+let customer = '';
 // let filename = '';
 
 async function request(method, data=[]) {
-  const params={'method': method, 'data': data};
+  const params={'method': method, 'data': data, 'name': 'village'};
   const response = await fetch ('back.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -167,9 +168,11 @@ function renderTitleSelect() {
 const parseVillage = new ParseVillage();
 load.appendChild(parseVillage.view);
 
-request('load')
+request('load', 'village')
   .then(responce => {
-    labelData = responce;
+    console.log(JSON.parse(responce));
+    labelData = JSON.parse(responce)['data'];
+    customer = JSON.parse(responce)['customer'];
     if (labelData.length > 0) {
       document.querySelector('#labels-wrapper').classList.remove('is-hidden');
       renderTitleSelect();
