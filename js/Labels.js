@@ -88,7 +88,7 @@ export default class Labels {
     print(view) {
         const WinPrint = window.open('','','left=50,top=50,width=1920,height=1080,toolbar=0,scrollbars=1,status=0');
             WinPrint.document.write(`<link rel="stylesheet" href="../css/bulma.min.css">`);
-            WinPrint.document.write(`<link rel="stylesheet" href="../css/printstyle.css">`);
+            WinPrint.document.write(`<link rel="stylesheet" href="../css/printstyle.css?1">`);
             WinPrint.document.write(view.outerHTML);
             WinPrint.document.close();
             WinPrint.focus();
@@ -114,7 +114,14 @@ export default class Labels {
             item['labelTail'] = item.value % this.data.maxItemsInPack;
         }
         console.log(this.data);
-        this.renderPageA6();
+        switch (this.data.size) {
+            case "A4": 
+                this.renderPageA4();
+                break;
+            case "A6": 
+                this.renderPageA6();
+                break;
+        }
     }
 
     constructor(data) {

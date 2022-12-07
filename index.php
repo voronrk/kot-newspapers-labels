@@ -11,11 +11,8 @@
 </head>
 <body>
     <div class="container py-6">
-        <div class="box">
+        <div class="box" id="load">
             <div class="title is-size-5">Загрузка разнарядки</div>
-            <label class="label">Выберите файл</label>
-            <input class="button" type="file" id="input-file"></input>
-            <div class="notification is-primary is-light is-hidden" id="data-loaded-notification">Данные загружены</div>
         </div>
 
         <div class="box is-hidden" id="labels-wrapper">
@@ -48,6 +45,27 @@
                         <label class="label">Номер заказа</label>
                         <input name="ordernum" class="input" type="string" placeholder="Номер заказа" value="10568">
                         <p class="help is-danger is-hidden" id="ordernum-warning">Заполните поле</p>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="field ml-4">
+                        <label class="label">Формат</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="size" value="A4">
+                                А4
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="size" value="A6">
+                                А6
+                            </label>
+                        </div>
+                        <p class="help is-danger is-hidden" id="size-warning">Заполните поле</p>
+                    </div>
+                    <div class="field ml-4">
+                        <label class="label">Количество в пачке</label>
+                        <input name="countpack" class="input" type="number" placeholder="В пачке" value="200" step=50>
+                        <p class="help is-danger is-hidden" id="count-pack-warning">Заполните поле</p>
                     </div>
                 </div>
                 <button type="submit" class="button is-primary" id="button-print">Печатать</button>        

@@ -2,15 +2,16 @@ import ParseVillage from './ParseVillage.js';
 import Labels from './Labels.js';
 
 const btnPrint = document.querySelector('#button-print');
-const fileField = document.querySelector('#input-file');
+// const fileField = document.querySelector('#input-file');
 const selectTitle = document.querySelector('#select-title');
 const labelForm = document.querySelector('#label-form');
 const warnings = document.querySelectorAll('.is-danger');
+const load = document.querySelector('#load');
 
-fileField.value = '';
-let separatedData = [];
+// fileField.value = '';
+// let separatedData = [];
 let labelData = [];
-let filename = '';
+// let filename = '';
 
 async function request(method, data=[]) {
   const params={'method': method, 'data': data};
@@ -136,6 +137,14 @@ function validate(form) {
     document.querySelector('#count-warning').classList.remove('is-hidden');
     flag = false;
   };
+  if(form.countpack.value == '' || form.countpack.value == 0) {
+    document.querySelector('#count-pack-warning').classList.remove('is-hidden');
+    flag = false;
+  };
+  if(form.size.value == '') {
+    document.querySelector('#size-warning').classList.remove('is-hidden');
+    flag = false;
+  };
   return flag;
 }
 
@@ -154,7 +163,9 @@ function renderTitleSelect() {
   }
 }
 
-fileField.addEventListener('change', handleFile, false);
+// fileField.addEventListener('change', handleFile, false);
+const parseVillage = new ParseVillage();
+load.appendChild(parseVillage.view);
 
 request('load')
   .then(responce => {
@@ -171,7 +182,8 @@ request('load')
             orderNum: labelForm.elements.ordernum.value,
             date: formatDate(labelForm.elements.date.value),
             totalCount: labelForm.elements.count.value,
-            maxItemsInPack: 50,
+            maxItemsInPack: labelForm.elements.countpack.value,
+            size: labelForm.elements.size.value,
             data: labelData[labelForm.elements.title.value].data
           };
           let label = new Labels(params);

@@ -38,10 +38,10 @@
 .zakaz-A6 {
     transform: rotate(-90deg);
     white-space: nowrap;
-    width: 100px;
+    width: 50px;
 }
 
 .img-A6 {
-    width: 120px;
-    margin: 10px;
+    width: 80px;
+    margin: 5px;
 }

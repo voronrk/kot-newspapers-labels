@@ -1,5 +1,18 @@
 export default class ParseVillage {
 
+    separatedData = [];
+    labelData = [];
+
+    async request(method, data=[]) {
+        const params={'method': method, 'data': data};
+        const response = await fetch ('back.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(params)
+        });
+        return await response.json();
+    }
+
     decChar(c) {
         return String.fromCharCode(c.charCodeAt(0) - 1);
     }
@@ -25,13 +38,12 @@ export default class ParseVillage {
                     this.getColumn(segmentData, key, segment.lastIndex, tmp.data);
                 }
             };
-        labelData.push(tmp);
+        this.labelData.push(tmp);
     }
-
-    request('save', labelData)
+    this.request('save', this.labelData)
         .then(result => {
             if (result > 0) {
-                document.querySelector('#data-loaded-notification').classList.remove('is-hidden');
+                this.notification.classList.remove('is-hidden');
                 setTimeout(()=> {
                     location.reload();
                 },500);        
@@ -42,28 +54,28 @@ export default class ParseVillage {
     separateData(inputData) {
         for(let key in inputData) {
             let index = +key.substring(1);
-            let tmp = separatedData.filter((item) => {return (index > item.firstIndex && index < item.lastIndex)})[0];
+            let tmp = this.separatedData.filter((item) => {return (index > item.firstIndex && index < item.lastIndex)})[0];
             if(tmp) {
-            tmp.data[key] = inputData[key];
+                tmp.data[key] = inputData[key];
             };    
         }
-        this.compileData(separatedData);
+        this.compileData(this.separatedData);
     }
     
     createSegments(inputData) {
         for (let key in inputData) {
             if (inputData[key].match(/П[0-9]+/)) {
-            if(separatedData.length>0) {
-                separatedData[separatedData.length-1].lastIndex = key.substring(1)-1;
+            if(this.separatedData.length>0) {
+                this.separatedData[this.separatedData.length-1].lastIndex = key.substring(1)-1;
             };
-            separatedData.push({
+            this.separatedData.push({
                 firstIndex: +key.substring(1),
                 title: inputData[key].replace(/П[0-9]+/, '').trim(),
                 data: {}
             });
             }
         }
-        separatedData[separatedData.length-1].lastIndex = 1000;
+        this.separatedData[this.separatedData.length-1].lastIndex = 1000;
         this.separateData(inputData);  
     }
     
@@ -76,16 +88,50 @@ export default class ParseVillage {
         }
         this.createSegments(parsedData);
     }
+
+    getFile(e) {
+        console.log(e);
+        let data = new Uint8Array(e.target.result);
+        let workbook = XLSX.read(data, {type: 'array'});
+        this.parse(workbook.Sheets['Лист1']);
+    }
     
     handleFile(e) {
-        labelData = [];
-        var files = e.target.files, f = files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var data = new Uint8Array(e.target.result);
-            var workbook = XLSX.read(data, {type: 'array'});
+        console.log('1', this);
+        this.labelData = [];
+        let files = e.target.files, f = files[0];
+        let reader = new FileReader();
+        reader.addEventListener('load', (e) => {
+            console.log('2', this);
+            let data = new Uint8Array(e.target.result);
+            let workbook = XLSX.read(data, {type: 'array'});
             this.parse(workbook.Sheets['Лист1']);
-        };
+        });
         reader.readAsArrayBuffer(f);
     };
+
+    render() {
+        this.view = document.createElement('div');
+        const label = document.createElement('label');
+        label.classList.add('label');
+        label.innerText = 'Выберите файл';
+        
+        const input = document.createElement('input');
+        input.classList.add('button');
+        input.type = 'file';
+
+        input.addEventListener('change', this.handleFile.bind(this), false);
+
+        this.notification = document.createElement('div');
+        this.notification.classList.add('notification', 'is-primary', 'is-light', 'is-hidden');
+        this.notification.innerText = 'Данные загружены';
+
+        this.view.appendChild(label);
+        this.view.appendChild(input);
+        this.view.appendChild(this.notification);
+    }
+
+    constructor() {
+        this.render();
+    }
 }
