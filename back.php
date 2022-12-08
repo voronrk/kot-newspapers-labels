@@ -22,7 +22,7 @@ class Handler
         unset($fileNames[0]);
         unset($fileNames[1]);
         foreach($fileNames as $name) {
-            $data[] = file_get_contents('data/' . $name);
+            $data[] = json_decode(file_get_contents('data/' . $name));
         };
         return json_encode($data);
     }

@@ -21,7 +21,7 @@
             <div class="field">
                 <label class="label">Заказчик</label>
                 <div class="select">
-                    <select id="select-type" ></select>
+                    <select id="select-customer" ></select>
                 </div>
             </div>
 
