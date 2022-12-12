@@ -89,7 +89,6 @@ function renderCustomerSelect(data) {
 }
 
 function renderLoaders(data) {
-  console.log(data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'}));
   const dateVID = data.filter(item => {return item.customer == 'Вятский издательский дом'}).length > 0 ? data.filter(item => {return item.customer == 'Вятский издательский дом'})[0]['date'] : '';
   const dateAifKirov = data.filter(item => {return item.customer == 'АиФ-Киров'}).length > 0 ? data.filter(item => {return item.customer == 'АиФ-Киров'})[0]['date'] : '';
   const dateAifKomi = data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'}).length > 0 ? data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'})[0]['date'] : '';

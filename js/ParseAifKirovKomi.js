@@ -22,7 +22,7 @@ export default class AifKirovKomi {
         for(let item of inputDataArray) {
             let itemArray = item.replace(/(\d+),(\d+)/g,'$1$2').split(';');
             if (begin) {
-                parsedData.data.push({title: itemArray[0], value: itemArray[3]});
+                parsedData.data.push({title: itemArray[0], value: parseInt(itemArray[3]) + parseInt(itemArray[4])});
             }
             if (itemArray[0].search('---') === 0) {
                 begin = !begin;
