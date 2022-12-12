@@ -80,8 +80,8 @@ export default class AifKirov {
         this.view.appendChild(this.notification);
     }
 
-    constructor(date = 'никогда') {
-        this.date = date;
+    constructor(date = '') {
+        this.date = date ? date : 'никогда';
         this.render();
     }
 }

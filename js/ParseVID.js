@@ -136,8 +136,8 @@ export default class ParseVillage {
         this.view.appendChild(this.notification);        
     }
 
-    constructor(date = 'никогда') {
-        this.date = date;
+    constructor(date = '') {
+        this.date = date ? date : 'никогда';
         this.render();
     }
 }
