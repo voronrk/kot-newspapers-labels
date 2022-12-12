@@ -4,7 +4,7 @@ export default class ParseVillage {
     labelData = [];
 
     async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'village2', 'customer': 'Вятский издательский дом2'};
+        const params={'method': method, 'data': data, 'name': 'VID', 'customer': 'Вятский издательский дом'};
         const response = await fetch ('back.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -120,6 +120,10 @@ export default class ParseVillage {
         input.classList.add('button');
         input.type = 'file';
 
+        const lastDate = document.createElement('div');
+        lastDate.classList.add('is-size-7', 'has-text-weight-bold');
+        lastDate.innerHTML = `Данные загружены: <span class="has-text-success">${this.date}</span>`;
+
         input.addEventListener('change', this.handleFile.bind(this), false);
 
         this.notification = document.createElement('div');
@@ -128,10 +132,12 @@ export default class ParseVillage {
 
         this.view.appendChild(label);
         this.view.appendChild(input);
-        this.view.appendChild(this.notification);
+        this.view.appendChild(lastDate);
+        this.view.appendChild(this.notification);        
     }
 
-    constructor() {
+    constructor(date = 'никогда') {
+        this.date = date;
         this.render();
     }
 }

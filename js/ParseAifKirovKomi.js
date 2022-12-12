@@ -64,6 +64,10 @@ export default class AifKirovKomi {
         input.classList.add('button');
         input.type = 'file';
 
+        const lastDate = document.createElement('div');
+        lastDate.classList.add('is-size-7', 'has-text-weight-bold');
+        lastDate.innerHTML = `Данные загружены: <span class="has-text-success">${this.date}</span>`;
+
         input.addEventListener('change', this.handleFile.bind(this), false);
 
         this.notification = document.createElement('div');
@@ -72,10 +76,12 @@ export default class AifKirovKomi {
 
         this.view.appendChild(label);
         this.view.appendChild(input);
+        this.view.appendChild(lastDate);
         this.view.appendChild(this.notification);
     }
 
-    constructor() {
+    constructor(date = '') {
+        this.date = date ? date : 'никогда';
         this.render();
     }
 }

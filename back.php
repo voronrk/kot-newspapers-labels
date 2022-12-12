@@ -3,7 +3,7 @@
 class Handler
 {
     public static function save($data, $name, $customer) {
-        $dataJSON = json_encode(['customer' => $customer, 'data' => $data]);
+        $dataJSON = json_encode(['customer' => $customer, 'date' => date("d.m.Y H:i:s"), 'data' => $data]);
         $result = file_put_contents($name, $dataJSON);
         return json_encode($result);
     }
@@ -18,6 +18,7 @@ class Handler
     }
 
     public static function load() {
+        $data = [];
         $fileNames = scandir('data');
         unset($fileNames[0]);
         unset($fileNames[1]);

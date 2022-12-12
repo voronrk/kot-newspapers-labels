@@ -1,4 +1,4 @@
-import ParseVillage from './ParseVillage.js';
+import ParseVID from './ParseVID.js';
 import ParseAifKirov from './ParseAifKirov.js';
 import ParseAifKirovKomi from './ParseAifKirovKomi.js';
 import Labels from './Labels.js';
@@ -88,17 +88,24 @@ function renderCustomerSelect(data) {
   });
 }
 
-const parseVillage = new ParseVillage();
-const parseAifKirov = new ParseAifKirov();
-const parseAifKirovKomi = new ParseAifKirovKomi();
-load.appendChild(parseVillage.view);
-load.appendChild(parseAifKirov.view);
-load.appendChild(parseAifKirovKomi.view);
+function renderLoaders(data) {
+  console.log(data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'}));
+  const dateVID = data.filter(item => {return item.customer == 'Вятский издательский дом'}).length > 0 ? data.filter(item => {return item.customer == 'Вятский издательский дом'})[0]['date'] : '';
+  const dateAifKirov = data.filter(item => {return item.customer == 'АиФ-Киров'}).length > 0 ? data.filter(item => {return item.customer == 'АиФ-Киров'})[0]['date'] : '';
+  const dateAifKomi = data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'}).length > 0 ? data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'})[0]['date'] : '';
+  const parseVID = new ParseVID(dateVID);
+  const parseAifKirov = new ParseAifKirov(dateAifKirov);
+  const parseAifKirovKomi = new ParseAifKirovKomi(dateAifKomi);
+  load.appendChild(parseVID.view);
+  load.appendChild(parseAifKirov.view);
+  load.appendChild(parseAifKirovKomi.view);
+}
 
-request('load', 'village')
+request('load')
   .then(responce => {
     console.log(responce);
     let data = responce;
+    renderLoaders(data);
     if (data.length > 0) {
       document.querySelector('#labels-wrapper').classList.remove('is-hidden');
       renderCustomerSelect(data);
