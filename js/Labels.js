@@ -30,7 +30,7 @@ export default class Labels {
         <tr><td class="np-title is-size-6">Вятский издательский дом, КОГАУ</td></tr>
         <tr><td class="has-text-weight-bold is-size-4 p-0 np-title"><span>${this.data.title}</span><br><span class="has-text-weight-normal">№ ${this.data.num} от ${this.data.date}</span><br><p>${title}</p></td></tr>
         <tr><td class="has-text-right np-title is-size-5">В пачке <span class="is-size-4 has-text-weight-bold">${quantity}</span> экз.</td></tr>
-        <tr><td class="is-size-6">ООО "Элефант"<br>
+        <tr><td class="is-size-7">ООО "Элефант"<br>
         Россия, 610004, г. Киров, ул. Ленина, 2Б</td></tr>
         <tr><td class="has-text-weight-bold is-size-6 p-0">2022</td></tr>        
       </table>

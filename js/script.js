@@ -1,5 +1,6 @@
 import ParseVillage from './ParseVillage.js';
 import ParseAifKirov from './ParseAifKirov.js';
+import ParseAifKirovKomi from './ParseAifKirovKomi.js';
 import Labels from './Labels.js';
 
 const btnPrint = document.querySelector('#button-print');
@@ -89,8 +90,10 @@ function renderCustomerSelect(data) {
 
 const parseVillage = new ParseVillage();
 const parseAifKirov = new ParseAifKirov();
+const parseAifKirovKomi = new ParseAifKirovKomi();
 load.appendChild(parseVillage.view);
 load.appendChild(parseAifKirov.view);
+load.appendChild(parseAifKirovKomi.view);
 
 request('load', 'village')
   .then(responce => {

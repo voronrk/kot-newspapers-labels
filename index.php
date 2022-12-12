@@ -11,8 +11,9 @@
 </head>
 <body>
     <div class="container py-6">
-        <div class="box" id="load">
+        <div class="box">
             <div class="title is-size-5">Загрузка разнарядки</div>
+            <div id="load" class="field is-grouped"></div>
         </div>
 
         <div class="box is-hidden" id="labels-wrapper">

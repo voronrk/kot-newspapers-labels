@@ -113,7 +113,7 @@ export default class ParseVillage {
 
         const label = document.createElement('label');
         label.classList.add('label');
-        label.innerText = 'Выберите файл';
+        label.innerText = 'ВИД';
         
         const input = document.createElement('input');
         input.classList.add('button');

@@ -1,10 +1,10 @@
-export default class AifKirov {
+export default class AifKirovKomi {
 
     // separatedData = [];
     // labelData = [];
 
     async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'aifkirov', 'customer': 'АиФ-Киров'};
+        const params={'method': method, 'data': data, 'name': 'aifkirovkomi', 'customer': 'АиФ-Киров (Коми)'};
         const response = await fetch ('back.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -57,7 +57,7 @@ export default class AifKirov {
 
         const label = document.createElement('label');
         label.classList.add('label');
-        label.innerText = 'АиФ-Киров';
+        label.innerText = 'АиФ-Киров (Коми)';
         
         const input = document.createElement('input');
         input.classList.add('button');
