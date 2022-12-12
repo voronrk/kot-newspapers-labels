@@ -1,10 +1,10 @@
 export default class ParseVillage {
 
-    separatedData = [];
-    labelData = [];
+    // separatedData = [];
+    // labelData = [];
 
     async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'village2', 'customer': 'АиФ'};
+        const params={'method': method, 'data': data, 'name': 'aifkirov', 'customer': 'АиФ-Киров'};
         const response = await fetch ('back.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -13,11 +13,11 @@ export default class ParseVillage {
         return await response.json();
     }
 
-    decChar(c) {
+    decChar_DEPRECATED(c) {
         return String.fromCharCode(c.charCodeAt(0) - 1);
     }
     
-    getColumn(inputData, key, maxIndex, destinationData) {
+    getColumn_DEPRECATED(inputData, key, maxIndex, destinationData) {
         let valueChar = key[0];
         let titleChar = this.decChar(valueChar);
         let index = +key.substring(1);
@@ -29,7 +29,7 @@ export default class ParseVillage {
     }
     
     //exit point
-    compileData(inputData) {
+    compileData_DEPRECATED(inputData) {
         for(let segment of inputData) {
             let tmp = {title: segment.title, data: []};
             let segmentData = segment.data;
@@ -51,7 +51,7 @@ export default class ParseVillage {
         });
     }
     
-    separateData(inputData) {
+    separateData_DEPRECATED(inputData) {
         for(let key in inputData) {
             let index = +key.substring(1);
             let tmp = this.separatedData.filter((item) => {return (index > item.firstIndex && index < item.lastIndex)})[0];
@@ -62,7 +62,7 @@ export default class ParseVillage {
         this.compileData(this.separatedData);
     }
     
-    createSegments(inputData) {
+    createSegments_DEPRECATED(inputData) {
         for (let key in inputData) {
             if (inputData[key].match(/П[0-9]+/)) {
             if(this.separatedData.length>0) {
@@ -78,24 +78,49 @@ export default class ParseVillage {
         this.separatedData[this.separatedData.length-1].lastIndex = 1000;
         this.separateData(inputData);  
     }
+
+    compileData(data) {
+
+        this.request('save', [parsedData])
+        .then(result => {
+            if (result > 0) {
+                this.notification.classList.remove('is-hidden');
+                setTimeout(()=> {
+                    location.reload();
+                },500);        
+            };
+        });
+    }
     
     parse(inputData) {
-        let inputDataArray = inputData.split('\r\n');
         let begin = false;
-        let parsedData = [];
+        let parsedData = {title: 'Аргументы и факты', data: []};
+
+        let inputDataArray = inputData.split('\r\n');
+                
         for(let item of inputDataArray) {
-            let itemArray = item.split(';');
+            let itemArray = item.replace(/(\d+),(\d+)/g,'$1$2').split(';');
             console.log(itemArray);
             if (begin) {
-                parsedData.push(itemArray);
+                parsedData.data.push({title: itemArray[0], value: itemArray[3]});
             }
             if (itemArray[0].search('---') === 0) {
                 begin = !begin;
             }
         }
-        parsedData.pop();
+        parsedData.data.pop();
         console.log(parsedData);
-        // this.createSegments(parsedData);
+        // this.compileData(parsedData);
+        this.request('save', [parsedData])
+        .then(result => {
+            if (result > 0) {
+                this.notification.classList.remove('is-hidden');
+                setTimeout(()=> {
+                    location.reload();
+                },500);        
+            };
+        });
+        
     }
 
     // getFile(e) {
