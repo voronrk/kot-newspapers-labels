@@ -54,6 +54,7 @@ export default class AifKirovKomi {
 
     render() {
         this.view = document.createElement('div');
+        this.view.classList.add('mr-4');
 
         const label = document.createElement('label');
         label.classList.add('label');

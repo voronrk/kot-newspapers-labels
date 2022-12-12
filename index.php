@@ -37,22 +37,22 @@
                     </div>
                     <div class="field ml-4">
                         <label class="label">Номер</label>
-                        <input name="num" class="input" type="text" placeholder="Номер" value = "15 (342)">
+                        <input name="num" class="input" type="text" placeholder="Номер">
                         <p class="help is-danger is-hidden" id="num-warning">Заполните поле</p>
                     </div>
                     <div class="field ml-4">
                         <label class="label">Дата выхода</label>
-                        <input name="date" class="input" type="date" placeholder="Дата" value="2022-11-28">
+                        <input name="date" class="input" type="date" placeholder="Дата">
                         <p class="help is-danger is-hidden" id="date-warning">Заполните поле</p>
                     </div>
                     <div class="field ml-4">
                         <label class="label">Тираж</label>
-                        <input name="count" class="input" type="number" placeholder="Тираж" value="1687">
+                        <input name="count" class="input" type="number" placeholder="Тираж">
                         <p class="help is-danger is-hidden" id="count-warning">Заполните поле</p>
                     </div>
                     <div class="field ml-4">
                         <label class="label">Номер заказа</label>
-                        <input name="ordernum" class="input" type="string" placeholder="Номер заказа" value="10568">
+                        <input name="ordernum" class="input" type="string" placeholder="Номер заказа">
                         <p class="help is-danger is-hidden" id="ordernum-warning">Заполните поле</p>
                     </div>
                 </div>
