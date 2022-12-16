@@ -8,7 +8,7 @@ export default class Labels {
             <td class="has-text-weight-bold is-size-3">Не бросать!</td>
             <td rowspan="6" class="is-vcentered p-0"><div class="has-text-weight-bold is-size-2 zakaz-A4">Заказ ${this.data.orderNum}</div></td>
         </tr>
-        <tr><td class="np-title is-size-3">Вятский издательский дом, КОГАУ</td></tr>
+        <tr><td class="np-title is-size-3">${this.data.labelName}</td></tr>
         <tr><td class="has-text-weight-bold is-size-1 p-0 np-title"><span>${this.data.title}</span><br> № ${this.data.num} от ${this.data.date}<br><br>${title}</td></tr>
         <tr><td class="has-text-right np-title is-size-3">В пачке <span class="is-size-2 has-text-weight-bold">${quantity}</span> экз.</td></tr>
         <tr><td class="is-size-4">ООО "Элефант"<br>
@@ -27,7 +27,7 @@ export default class Labels {
             <td class="has-text-weight-bold is-size-5 p-0">Не бросать!</td>
             <td rowspan="6" class="is-vcentered p-0"><div class="has-text-weight-bold is-size-4 has-text-centered zakaz-A6">Заказ ${this.data.orderNum}</div></td>
         </tr>
-        <tr><td class="np-title is-size-6">Вятский издательский дом, КОГАУ</td></tr>
+        <tr><td class="np-title is-size-6">${this.data.labelName}</td></tr>
         <tr><td class="has-text-weight-bold is-size-4 p-0 np-title"><span>${this.data.title}</span><br><span class="has-text-weight-normal">№ ${this.data.num} от ${this.data.date}</span><br><p>${title}</p></td></tr>
         <tr><td class="has-text-right np-title is-size-5">В пачке <span class="is-size-4 has-text-weight-bold">${quantity}</span> экз.</td></tr>
         <tr><td class="is-size-7">ООО "Элефант"<br>
@@ -95,7 +95,7 @@ export default class Labels {
             WinPrint.document.close();
             WinPrint.focus();
             setTimeout(()=> {
-                WinPrint.print();
+                // WinPrint.print();
                 // WinPrint.close();
                 // labelForm.reset();
             },500);

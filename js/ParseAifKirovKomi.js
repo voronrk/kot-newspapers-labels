@@ -4,7 +4,7 @@ export default class AifKirovKomi {
     // labelData = [];
 
     async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'aifkirovkomi', 'customer': 'АиФ-Киров (Коми)'};
+        const params={'method': method, 'data': data, 'name': 'aifkirovkomi', 'customer': 'АиФ-Киров (Коми)', 'labelName': 'Аргументы и факты, АО'};
         const response = await fetch ('back.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

@@ -4,7 +4,7 @@ export default class ParseVillage {
     labelData = [];
 
     async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'VID', 'customer': 'Вятский издательский дом', labelName: 'Вятский издательский дом, КОГАУ'};
+        const params={'method': method, 'data': data, 'name': 'RG', 'customer': 'РГ', labelName: 'АО "Издательство "Российская газета"'};
         const response = await fetch ('back.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -13,11 +13,11 @@ export default class ParseVillage {
         return await response.json();
     }
 
-    decChar(c) {
+    decChar_DEPRECATED(c) {
         return String.fromCharCode(c.charCodeAt(0) - 1);
     }
     
-    getColumn(inputData, key, maxIndex, destinationData) {
+    getColumn_DEPRECATED(inputData, key, maxIndex, destinationData) {
         let valueChar = key[0];
         let titleChar = this.decChar(valueChar);
         let index = +key.substring(1);
@@ -29,7 +29,7 @@ export default class ParseVillage {
     }
     
     //exit point
-    compileData(inputData) {
+    compileData_DEPRECATED(inputData) {
         for(let segment of inputData) {
             let tmp = {title: segment.title, data: []};
             let segmentData = segment.data;
@@ -51,7 +51,7 @@ export default class ParseVillage {
         });
     }
     
-    separateData(inputData) {
+    separateData_DEPRECATED(inputData) {
         for(let key in inputData) {
             let index = +key.substring(1);
             let tmp = this.separatedData.filter((item) => {return (index > item.firstIndex && index < item.lastIndex)})[0];
@@ -62,7 +62,7 @@ export default class ParseVillage {
         this.compileData(this.separatedData);
     }
     
-    createSegments(inputData) {
+    createSegments_DEPRECATED(inputData) {
         for (let key in inputData) {
             if (inputData[key].match(/П[0-9]+/)) {
             if(this.separatedData.length>0) {
@@ -86,7 +86,26 @@ export default class ParseVillage {
                 parsedData[key] = inputData[key]['w'].trim();
             }
         }
-        this.createSegments(parsedData);
+        let data = {title: 'Издание 32185 "Российская газета" Неделя', data: []};
+        for(let key in parsedData) {
+            if(key[0]=='A') {
+                let tmp = {};
+                tmp.title = parsedData[key];
+                let valueKey = key.replace('A','B');
+                tmp.value = parsedData[valueKey];
+                data.data.push(tmp);
+            }            
+        }
+        console.log(this.data);
+        this.request('save', [data])
+        .then(result => {
+            if (result > 0) {
+                this.notification.classList.remove('is-hidden');
+                setTimeout(()=> {
+                    location.reload();
+                },500);        
+            };
+        });
     }
 
     getFile(e) {
@@ -114,7 +133,7 @@ export default class ParseVillage {
 
         const label = document.createElement('label');
         label.classList.add('label');
-        label.innerText = 'Районки';
+        label.innerText = 'РГ';
         
         const input = document.createElement('input');
         input.classList.add('button');

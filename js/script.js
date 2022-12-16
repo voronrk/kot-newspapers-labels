@@ -1,6 +1,7 @@
 import ParseVID from './ParseVID.js';
 import ParseAifKirov from './ParseAifKirov.js';
 import ParseAifKirovKomi from './ParseAifKirovKomi.js';
+import ParseRG from './ParseRG.js';
 import Labels from './Labels.js';
 
 const btnPrint = document.querySelector('#button-print');
@@ -11,6 +12,7 @@ const warnings = document.querySelectorAll('.is-danger');
 const load = document.querySelector('#load');
 
 let labelData = [];
+let labelName = '';
 
 async function request(method, data=[]) {
   const params={'method': method, 'data': data, 'name': 'village'};
@@ -83,6 +85,7 @@ function renderCustomerSelect(data) {
     console.log(selectCustomer.value);
     if(!(selectCustomer.value === '')) {
       labelData = data[selectCustomer.value].data;
+      labelName = data[selectCustomer.value].labelName;
       renderTitleSelect(labelData);      
     }
   });
@@ -92,12 +95,15 @@ function renderLoaders(data) {
   const dateVID = data.filter(item => {return item.customer == 'Вятский издательский дом'}).length > 0 ? data.filter(item => {return item.customer == 'Вятский издательский дом'})[0]['date'] : '';
   const dateAifKirov = data.filter(item => {return item.customer == 'АиФ-Киров'}).length > 0 ? data.filter(item => {return item.customer == 'АиФ-Киров'})[0]['date'] : '';
   const dateAifKomi = data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'}).length > 0 ? data.filter(item => {return item.customer == 'АиФ-Киров (Коми)'})[0]['date'] : '';
+  const dateRG = data.filter(item => {return item.customer == 'РГ'}).length > 0 ? data.filter(item => {return item.customer == 'РГ'})[0]['date'] : '';
   const parseVID = new ParseVID(dateVID);
   const parseAifKirov = new ParseAifKirov(dateAifKirov);
   const parseAifKirovKomi = new ParseAifKirovKomi(dateAifKomi);
+  const parseRG = new ParseRG(dateRG);
   load.appendChild(parseVID.view);
   load.appendChild(parseAifKirov.view);
   load.appendChild(parseAifKirovKomi.view);
+  load.appendChild(parseRG.view);
 }
 
 request('load')
@@ -111,8 +117,10 @@ request('load')
       btnPrint.addEventListener('click', (e) => {
         e.preventDefault();
         if (validate(labelForm.elements)) {
+          console.log(labelData);
           let params = {
             title: labelData[labelForm.elements.title.value].title,
+            labelName: labelName,
             num: labelForm.elements.num.value,
             orderNum: labelForm.elements.ordernum.value,
             date: formatDate(labelForm.elements.date.value),

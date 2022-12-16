@@ -2,8 +2,8 @@
 
 class Handler
 {
-    public static function save($data, $name, $customer) {
-        $dataJSON = json_encode(['customer' => $customer, 'date' => date("d.m.Y H:i:s"), 'data' => $data]);
+    public static function save($data, $name, $customer, $labelName) {
+        $dataJSON = json_encode(['customer' => $customer, 'labelName' => $labelName, 'date' => date("d.m.Y H:i:s"), 'data' => $data]);
         $result = file_put_contents($name, $dataJSON);
         return json_encode($result);
     }
@@ -35,10 +35,11 @@ $method = $request['method'];
 $data = $request['data'];
 $name = 'data/' . $request['name'] . '.json';
 $customer = isset($request['customer']) ? $request['customer'] : '';
+$labelName = isset($request['labelName']) ? $request['labelName'] : '';
 
 switch ($method) {
     case "save":
-        $result = Handler::save($data, $name, $customer);
+        $result = Handler::save($data, $name, $customer, $labelName);
         echo $result;
 	break;
     case "load":
