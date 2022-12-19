@@ -82,7 +82,6 @@ function renderCustomerSelect(data) {
     `;
   };
   selectCustomer.addEventListener('change', () => {
-    console.log(selectCustomer.value);
     if(!(selectCustomer.value === '')) {
       labelData = data[selectCustomer.value].data;
       labelName = data[selectCustomer.value].labelName;

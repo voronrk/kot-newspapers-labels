@@ -8,15 +8,6 @@ class Handler
         return json_encode($result);
     }
 
-    public static function load_old($name) {
-        if (file_exists($name)) {
-            $data = file_get_contents($name);
-            return $data;
-        } else {
-            return json_encode([]);
-        };
-    }
-
     public static function load() {
         $data = [];
         $fileNames = scandir('data');
