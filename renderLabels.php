@@ -14,12 +14,12 @@ class Handler
         $view = "
         <table class='table table-A4 is-bordered has-text-centered'>
         <tr>
-            <td rowspan='6' class='py-6 is-vcentered'><img class='img-A4' src='img/pic.png'></td>
+            <td rowspan='6' class='py-6 is-vcentered'><img class='img-A4' src='/img/pic.png'></td>
             <td class='has-text-weight-bold is-size-3'>Не бросать!</td>
             <td rowspan='6' class='is-vcentered p-0'><div class='has-text-weight-bold is-size-2 zakaz-A4'>Заказ {$this->orderNum}</div></td>
         </tr>
         <tr><td class='np-title is-size-3'>{$this->labelName}</td></tr>
-        <tr><td class='has-text-weight-bold is-size-1 p-0 np-title'><span>{$this->title}</span><br> № {$this->num} от {$this->date}<br><br>{$title}</td></tr>
+        <tr><td class='has-text-weight-bold is-size-1 p-0 np-title'><span>{$this->title}</span><br><span class='has-text-weight-normal'>№ {$this->num} от {$this->date}</span><br><br>{$title}</td></tr>
         <tr><td class='has-text-right np-title is-size-3'>В пачке <span class='is-size-2 has-text-weight-bold'>{$quantity}</span> экз.</td></tr>
         <tr><td class='is-size-4'>ООО 'Элефант'<br>
         Россия, 610004, г. Киров, ул. Ленина, 2Б</td></tr>
@@ -33,7 +33,7 @@ class Handler
         $view = "
         <table class='table table-A6 is-bordered has-text-centered mb-6'>
         <tr>
-            <td rowspan='6' class='py-2 is-vcentered'><img class='img-A6' src='img/pic.png'></td>
+            <td rowspan='6' class='py-2 is-vcentered'><img class='img-A6' src='/img/pic.png'></td>
             <td class='has-text-weight-bold is-size-5 p-0'>Не бросать!</td>
             <td rowspan='6' class='is-vcentered p-0'><div class='has-text-weight-bold is-size-4 has-text-centered zakaz-A6'>Заказ {$this->orderNum}</div></td>
         </tr>
@@ -50,7 +50,8 @@ class Handler
 
     private function renderPageA4() 
     {
-        $view = "";
+        $view = "<link rel='stylesheet' href='../css/bulma.min.css'>
+        <link rel='stylesheet' href='../css/printstyle.css?2'>";
         foreach($this->data as $item) {
             $i = 0;
             while($i < $item['labelsFullPackCount']) {
@@ -66,7 +67,9 @@ class Handler
 
     private function renderPageA6() 
     {
-        $view = "<div class='columns'><div class='column is-half'>{{column-left}}</div><div class='column is-half'>{{column-right}}</div></div>";
+        $view = "<link rel='stylesheet' href='../css/bulma.min.css'>
+        <link rel='stylesheet' href='../css/printstyle.css?2'>
+        <div class='columns'><div class='column is-half'>{{column-left}}</div><div class='column is-half'>{{column-right}}</div></div>";
         $viewLeft = "";
         $viewRight = "";
         $leftColumn = true;

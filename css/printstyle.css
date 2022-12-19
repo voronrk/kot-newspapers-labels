@@ -19,7 +19,8 @@
 }
 
 .zakaz-A4 {
-    transform: rotate(-90deg);
+    transform: rotate(-90deg);    
+    -webkit-transform: rotate(-90deg);
     white-space: nowrap;
     width: 100px;
 }

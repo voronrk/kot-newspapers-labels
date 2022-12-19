@@ -128,7 +128,7 @@ request('load')
             size: labelForm.elements.size.value,
             data: labelData[labelForm.elements.title.value].data
           };
-          let label = new Labels(params);
+          let label = new Labels(params, labelForm);
         }        
       });
     };
