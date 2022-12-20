@@ -78,6 +78,18 @@ export default class AifKirov {
         this.view.appendChild(input);
         this.view.appendChild(lastDate);
         this.view.appendChild(this.notification);
+
+        this.tab = document.createElement('li');
+        this.tab.innerHTML = `<a>АиФ-Киров</a>`;
+        this.tab.addEventListener('click', () => {
+            load = document.querySelector('#load');
+            for(let tab of document.querySelector('#tabs').querySelectorAll('li')) {
+                tab.classList.remove('is-active');
+            };
+            this.tab.classList.add('is-active');
+            load.innerHTML = '';
+            load.appendChild(this.view);
+        });
     }
 
     constructor(date = '') {

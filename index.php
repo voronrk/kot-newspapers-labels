@@ -13,6 +13,9 @@
     <div class="container py-6">
         <div class="box">
             <div class="title is-size-5">Загрузка разнарядки</div>
+            <div class="tabs is-boxed">
+                <ul id='tabs'></ul>
+            </div>
             <div id="load" class="field is-grouped"></div>
         </div>
 

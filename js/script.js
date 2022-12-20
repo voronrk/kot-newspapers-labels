@@ -10,6 +10,7 @@ const selectCustomer = document.querySelector('#select-customer');
 const labelForm = document.querySelector('#label-form');
 const warnings = document.querySelectorAll('.is-danger');
 const load = document.querySelector('#load');
+const tabs = document.querySelector('#tabs');
 
 let labelData = [];
 let labelName = '';
@@ -99,10 +100,15 @@ function renderLoaders(data) {
   const parseAifKirov = new ParseAifKirov(dateAifKirov);
   const parseAifKirovKomi = new ParseAifKirovKomi(dateAifKomi);
   const parseRG = new ParseRG(dateRG);
-  load.appendChild(parseVID.view);
-  load.appendChild(parseAifKirov.view);
-  load.appendChild(parseAifKirovKomi.view);
-  load.appendChild(parseRG.view);
+  tabs.appendChild(parseVID.tab);
+  tabs.appendChild(parseAifKirov.tab);
+  tabs.appendChild(parseAifKirovKomi.tab);
+  tabs.appendChild(parseRG.tab);
+
+  // load.appendChild(parseVID.view);
+  // load.appendChild(parseAifKirov.view);
+  // load.appendChild(parseAifKirovKomi.view);
+  // load.appendChild(parseRG.view);
 }
 
 request('load')
