@@ -9,7 +9,7 @@ export default class Labels {
                 WinPrint.print();
                 WinPrint.close();
                 this.labelForm.reset();
-            },500);
+            },1500);
     }
 
     async request() {
