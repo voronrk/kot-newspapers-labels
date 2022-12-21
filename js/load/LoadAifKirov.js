@@ -1,10 +1,10 @@
-export default class ParseVillage {
+export default class LoadAifKirov {
 
-    separatedData = [];
-    labelData = [];
+    // separatedData = [];
+    // labelData = [];
 
     async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'RG', 'customer': 'РГ', labelName: 'АО "Издательство "Российская газета"'};
+        const params={'method': method, 'data': data, 'name': 'aifkirov', 'customer': 'АиФ-Киров', 'labelName': 'Аргументы и факты, АО'};
         const response = await fetch ('back.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -14,26 +14,23 @@ export default class ParseVillage {
     }
 
     parse(inputData) {
-        let parsedData = {};
-        for(let key in inputData) {
-            if(key[0] != '!') {
-                parsedData[key] = inputData[key]['w'].trim();
+        let begin = false;
+        let parsedData = {title: 'Аргументы и факты', data: []};
+
+        let inputDataArray = inputData.split('\r\n');
+                
+        for(let item of inputDataArray) {
+            let itemArray = item.replace(/(\d+),(\d+)/g,'$1$2').split(';');
+            if (begin) {
+                parsedData.data.push({title: itemArray[0], value: parseInt(itemArray[3]) + parseInt(itemArray[4])});
+            }
+            if (itemArray[0].search('---') === 0) {
+                begin = !begin;
             }
         }
-        let data = {title: 'Издание 32185 "Российская газета" Неделя', data: [], totalCount: 0};
-        for(let key in parsedData) {
-            if(key[0]=='A') {
-                let tmp = {};
-                tmp.title = parsedData[key];
-                let valueKey = key.replace('A','B');
-                tmp.value = parsedData[valueKey];
-                data.totalCount += parseInt(tmp.value);
-                data.data.push(tmp);
-            }            
-        }
-        data.totalCount = data.totalCount/2;
-        console.log(this.data);
-        this.request('save', [data])
+        parsedData.data.pop();
+        console.log(parsedData);
+        this.request('save', [parsedData])
         .then(result => {
             if (result > 0) {
                 this.notification.classList.remove('is-hidden');
@@ -43,24 +40,16 @@ export default class ParseVillage {
             };
         });
     }
-
-    getFile(e) {
-        console.log(e);
-        let data = new Uint8Array(e.target.result);
-        let workbook = XLSX.read(data, {type: 'array'});
-        this.parse(workbook.Sheets['Лист1']);
-    }
     
     handleFile(e) {
         this.labelData = [];
-        let files = e.target.files, f = files[0];
+        let file = e.target.files[0];
         let reader = new FileReader();
         reader.addEventListener('load', (e) => {
-            let data = new Uint8Array(e.target.result);
-            let workbook = XLSX.read(data, {type: 'array'});
-            this.parse(workbook.Sheets['Лист1']);
+            let data = e.target.result.replaceAll(/( ){3,}/g,';');
+            this.parse(data);
         });
-        reader.readAsArrayBuffer(f);
+        reader.readAsText(file, 'CP1251');
     };
 
     render() {
@@ -69,7 +58,7 @@ export default class ParseVillage {
 
         const label = document.createElement('label');
         label.classList.add('label');
-        label.innerText = 'РГ';
+        label.innerText = 'АиФ-Киров';
         
         const input = document.createElement('input');
         input.classList.add('button');
@@ -89,9 +78,9 @@ export default class ParseVillage {
         this.view.appendChild(input);
         this.view.appendChild(lastDate);
         this.view.appendChild(this.notification);
-        
+
         this.tab = document.createElement('li');
-        this.tab.innerHTML = `<a>РГ</a>`;
+        this.tab.innerHTML = `<a>АиФ-Киров</a>`;
         this.tab.addEventListener('click', () => {
             load = document.querySelector('#load');
             for(let tab of document.querySelector('#tabs').querySelectorAll('li')) {
@@ -100,10 +89,13 @@ export default class ParseVillage {
             this.tab.classList.add('is-active');
             load.innerHTML = '';
             load.appendChild(this.view);
+            this.app.print.appendChild(this.app.printer.view);
         });
     }
 
-    constructor(date = '') {
+    constructor(app, date = '') {
+        this.title = 'АиФ-Киров';
+        this.app = app;
         this.date = date ? date : 'никогда';
         this.render();
     }

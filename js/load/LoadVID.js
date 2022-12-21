@@ -1,4 +1,4 @@
-export default class ParseVillage {
+export default class LoadVID {
 
     separatedData = [];
     labelData = [];
@@ -135,17 +135,18 @@ export default class ParseVillage {
         this.view.appendChild(lastDate);
         this.view.appendChild(this.notification);
         
-        this.tab = document.createElement('li');
-        this.tab.innerHTML = `<a>Районки</a>`;
-        this.tab.addEventListener('click', () => {
-            load = document.querySelector('#load');
-            for(let tab of document.querySelector('#tabs').querySelectorAll('li')) {
-                tab.classList.remove('is-active');
-            };
-            this.tab.classList.add('is-active');
-            load.innerHTML = '';
-            load.appendChild(this.view);
-        });
+        // this.tab = document.createElement('li');
+        // this.tab.innerHTML = `<a>Районки</a>`;
+        // this.tab.addEventListener('click', () => {
+        //     load = document.querySelector('#load');
+        //     for(let tab of document.querySelector('#tabs').querySelectorAll('li')) {
+        //         tab.classList.remove('is-active');
+        //     };
+        //     this.tab.classList.add('is-active');
+        //     load.innerHTML = '';
+        //     load.appendChild(this.view);
+        //     this.app.print.appendChild(this.app.printer.view);
+        // });
     }
 
     constructor(date = '') {

@@ -1,10 +1,10 @@
-export default class AifKirov {
+export default class LoadAifKirovKomi {
 
     // separatedData = [];
     // labelData = [];
 
     async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'aifkirov', 'customer': 'АиФ-Киров', 'labelName': 'Аргументы и факты, АО'};
+        const params={'method': method, 'data': data, 'name': 'aifkirovkomi', 'customer': 'АиФ-Киров (Коми)', 'labelName': 'Аргументы и факты, АО'};
         const response = await fetch ('back.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -58,7 +58,7 @@ export default class AifKirov {
 
         const label = document.createElement('label');
         label.classList.add('label');
-        label.innerText = 'АиФ-Киров';
+        label.innerText = 'АиФ-Киров (Коми)';
         
         const input = document.createElement('input');
         input.classList.add('button');
@@ -80,7 +80,7 @@ export default class AifKirov {
         this.view.appendChild(this.notification);
 
         this.tab = document.createElement('li');
-        this.tab.innerHTML = `<a>АиФ-Киров</a>`;
+        this.tab.innerHTML = `<a>АиФ-Киров (Коми)</a>`;
         this.tab.addEventListener('click', () => {
             load = document.querySelector('#load');
             for(let tab of document.querySelector('#tabs').querySelectorAll('li')) {
@@ -89,10 +89,13 @@ export default class AifKirov {
             this.tab.classList.add('is-active');
             load.innerHTML = '';
             load.appendChild(this.view);
+            this.app.print.appendChild(this.app.printer.view);
         });
     }
 
-    constructor(date = '') {
+    constructor(app, date = '') {
+        this.title = 'АиФ-Киров (Коми)';
+        this.app = app;
         this.date = date ? date : 'никогда';
         this.render();
     }

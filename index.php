@@ -6,20 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bulma.min.css">
     <script src=js/script.js?<?=time()?> defer type="module"></script>
-    <script lang="javascript" src="js/xlsx.full.min.js"></script>
-    <title>Печать газетных ярлыков</title>
+    <script lang="javascript" src="js/lib/xlsx.full.min.js"></script>
+    <title>Печать упаковочных ярлыков</title>
 </head>
 <body>
-    <div class="container py-6">
-        <div class="box">
+    <div class="container py-6" id="app">
+        <!-- <div class="box">
             <div class="title is-size-5">Загрузка разнарядки</div>
             <div class="tabs is-boxed">
                 <ul id='tabs'></ul>
             </div>
             <div id="load" class="field is-grouped"></div>
-        </div>
+        </div> -->
 
-        <div class="box is-hidden" id="labels-wrapper">
+        <div id="print"></div>
+
+        <!-- <div class="box is-hidden" id="labels-wrapper">
             <div class="title is-size-5">Печать ярлыков</div>
 
             <div class="field">
@@ -82,7 +84,7 @@
                 </div>
                 <button type="submit" class="button is-primary" id="button-print">Печатать</button>        
             </form>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>
