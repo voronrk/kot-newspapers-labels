@@ -1,14 +1,7 @@
 export default class Print {
 
     template = `
-        <div class="title is-size-5">Печать ярлыков</div>
-
-        <div class="field">
-            <label class="label">Заказчик</label>
-            <div class="select">
-                <select id="select-customer" ></select>
-            </div>
-        </div>
+        <div class="title is-size-5 mt-6">Печать ярлыков</div>
 
         <form class="form mt-4" id="label-form">
             <div class="field is-grouped">
@@ -73,39 +66,50 @@ export default class Print {
             body: JSON.stringify(params)
         });
         return await response.json();
-      }
-      
+    }
+
+    async requestRenderLabels() {
+        const params={'data': this.printParams};
+        const response = await fetch ('renderLabels.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(params)
+        });
+        return await response.json();
+    }
+
+          
     validate(form) {
       let flag = true;
-      for(let warning of warnings) {
+      for(let warning of this.view.querySelectorAll('.is-danger')) {
         warning.classList.add('is-hidden');
       }
       if(form.title.value == '') {
-        document.querySelector('#title-warning').classList.remove('is-hidden');
+        this.view.querySelector('#title-warning').classList.remove('is-hidden');
         flag = false;
       };
       if(form.num.value == '') {
-        document.querySelector('#num-warning').classList.remove('is-hidden');
+        this.view.querySelector('#num-warning').classList.remove('is-hidden');
         flag = false;
       };
       if(form.ordernum.value == '') {
-        document.querySelector('#ordernum-warning').classList.remove('is-hidden');
+        this.view.querySelector('#ordernum-warning').classList.remove('is-hidden');
         flag = false;
       };
       if(form.date.value == '') {
-        document.querySelector('#date-warning').classList.remove('is-hidden');
+        this.view.querySelector('#date-warning').classList.remove('is-hidden');
         flag = false;
       };
       if(form.count.value == '') {
-        document.querySelector('#count-warning').classList.remove('is-hidden');
+        this.view.querySelector('#count-warning').classList.remove('is-hidden');
         flag = false;
       };
       if(form.countpack.value == '' || form.countpack.value == 0) {
-        document.querySelector('#count-pack-warning').classList.remove('is-hidden');
+        this.view.querySelector('#count-pack-warning').classList.remove('is-hidden');
         flag = false;
       };
       if(form.size.value == '') {
-        document.querySelector('#size-warning').classList.remove('is-hidden');
+        this.view.querySelector('#size-warning').classList.remove('is-hidden');
         flag = false;
       };
       return flag;
@@ -116,34 +120,70 @@ export default class Print {
       return `${arDate[2]}.${arDate[1]}.${arDate[0]}`
     }
     
-    renderTitleSelect(data) {
-      selectTitle.innerHTML = `<option></option>`;
-      for(let key in data) {
-        selectTitle.innerHTML += `
-        <option value=${key}>${data[key].title}</option>
-        `;
+    renderTitleSelect() {
+      if(this.labelData.length > 1) {
+        this.selectTitle.innerHTML = `<option></option>`;
+        for(let key in this.labelData) {
+          this.selectTitle.innerHTML += `<option value=${key}>${this.labelData[key].title}</option>`;
+        }
+      } else {
+        this.selectTitle.innerHTML = `<option value=0>${this.labelData[0].title}</option>`;
       }
     }
-    
-    renderCustomerSelect(data) {
-      selectCustomer.innerHTML = `<option></option>`;
-      for(let key in data) {
-        selectCustomer.innerHTML += `
-        <option value=${key}>${data[key].customer}</option>
-        `;
-      };
-      selectCustomer.addEventListener('change', () => {
-        if(!(selectCustomer.value === '')) {
-          labelData = data[selectCustomer.value].data;
-          labelName = data[selectCustomer.value].labelName;
-          renderTitleSelect(labelData);      
-        }
-      });
+
+    update(data) {
+      console.log(data);
+      // this.data = data;
+      this.date = data.date;
+      this.labelData = data.data;
+      this.labelName = data.labelName;
+      this.renderTitleSelect();
     }
 
-    constructor(customer) {
+    print(view) {
+      const WinPrint = window.open('','','left=50,top=50,width=1920,height=1080,toolbar=0,scrollbars=1,status=0');
+          WinPrint.document.write(view);
+          WinPrint.document.close();
+          WinPrint.focus();
+          setTimeout(()=> {
+              WinPrint.print();
+              WinPrint.close();
+              this.labelForm.reset();
+          },1500);
+    }
+
+    generateLabels() {
+      this.requestRenderLabels()
+          .then(result => {
+              this.print(result);
+          });
+    }
+    
+    constructor() {
       this.view = document.createElement('div');
       this.view.innerHTML = this.template;
+
+      this.selectTitle = this.view.querySelector('#select-title');
+      this.btnPrint = this.view.querySelector('#button-print');
+      this.labelForm = this.view.querySelector('#label-form');
+
+      this.btnPrint.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (this.validate(this.labelForm.elements)) {
+          this.printParams = {
+            title: this.labelData[this.labelForm.elements.title.value].title,
+            labelName: this.labelName,
+            num: this.labelForm.elements.num.value,
+            orderNum: this.labelForm.elements.ordernum.value,
+            date: this.formatDate(this.labelForm.elements.date.value),
+            totalCount: this.labelForm.elements.count.value,
+            maxItemsInPack: this.labelForm.elements.countpack.value,
+            size: this.labelForm.elements.size.value,
+            data: this.labelData[this.labelForm.elements.title.value].data
+          };
+          this.generateLabels();
+        }        
+      });
     }
 
 }

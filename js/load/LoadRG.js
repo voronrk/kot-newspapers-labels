@@ -1,4 +1,6 @@
-export default class LoadRG {
+import Loader from './Loader.js';
+
+export default class LoadRG extends Loader {
 
     separatedData = [];
     labelData = [];
@@ -63,51 +65,5 @@ export default class LoadRG {
         reader.readAsArrayBuffer(f);
     };
 
-    render() {
-        this.view = document.createElement('div');
-        this.view.classList.add('mr-4');
 
-        const label = document.createElement('label');
-        label.classList.add('label');
-        label.innerText = 'РГ';
-        
-        const input = document.createElement('input');
-        input.classList.add('button');
-        input.type = 'file';
-
-        const lastDate = document.createElement('div');
-        lastDate.classList.add('is-size-7', 'has-text-weight-bold');
-        lastDate.innerHTML = `Данные загружены: <span class="has-text-success">${this.date}</span>`;
-
-        input.addEventListener('change', this.handleFile.bind(this), false);
-
-        this.notification = document.createElement('div');
-        this.notification.classList.add('notification', 'is-primary', 'is-light', 'is-hidden');
-        this.notification.innerText = 'Данные загружены';
-
-        this.view.appendChild(label);
-        this.view.appendChild(input);
-        this.view.appendChild(lastDate);
-        this.view.appendChild(this.notification);
-        
-        this.tab = document.createElement('li');
-        this.tab.innerHTML = `<a>РГ</a>`;
-        this.tab.addEventListener('click', () => {
-            load = document.querySelector('#load');
-            for(let tab of document.querySelector('#tabs').querySelectorAll('li')) {
-                tab.classList.remove('is-active');
-            };
-            this.tab.classList.add('is-active');
-            load.innerHTML = '';
-            load.appendChild(this.view);
-            this.app.print.appendChild(this.app.printer.view);
-        });
-    }
-
-    constructor(app, date = '') {
-        this.title = 'Российская газета';
-        this.app = app;
-        this.date = date ? date : 'никогда';
-        this.render();
-    }
 }

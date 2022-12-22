@@ -2,7 +2,6 @@ import LoadVID from './load/LoadVID.js';
 import LoadAifKirov from './load/LoadAifKirov.js';
 import LoadAifKirovKomi from './load/LoadAifKirovKomi.js';
 import LoadRG from './load/LoadRG.js';
-import Labels from './print/Labels.js';
 import Print from './print/Print.js';
 import App from './App.js';
 import Unit from './Unit.js';
@@ -30,8 +29,8 @@ const unitParams = [
     printer: new Print(),
   },
   {
-    title: 'РГ',
-    filename: 'aifkirovkomi',
+    title: 'Российская газета',
+    filename: 'RG',
     labelName: 'АО "Издательство "Российская газета"',
     loader: new LoadRG(),
     printer: new Print(),

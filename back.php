@@ -8,7 +8,7 @@ class Handler
         return json_encode($result);
     }
 
-    public static function load() {
+    public static function load_DEPRECATED() {
         $data = [];
         $fileNames = scandir('data');
         unset($fileNames[0]);
@@ -16,6 +16,11 @@ class Handler
         foreach($fileNames as $name) {
             $data[] = json_decode(file_get_contents('data/' . $name));
         };
+        return json_encode($data);
+    }
+
+    public static function load($name) {
+        $data = json_decode(file_get_contents($name));
         return json_encode($data);
     }
 }
