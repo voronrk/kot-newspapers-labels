@@ -15,25 +15,26 @@ export default class Unit {
             this.tab.classList.add('is-active');
             this.app.mainWrapper.innerHTML = '';
             this.app.mainWrapper.appendChild(this.view);
+            this.init();
         });
     }
     
-    async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': this.fileName, 'customer': this.title, labelName: this.labelName};
-        const response = await fetch ('back.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(params)
-        });
-        return await response.json();
-    }
-
     init() {
-        this.request('load')
+        this.app.request('load', {fileName: this.fileName})
             .then(responce => {
                 this.data = responce;
-                this.printer.update(this.data);
-            })
+                if(this.data.date) {
+                    this.printer.update(this.data);
+                    this.loader.updateDate(this.data.date);
+                    this.printer.show();
+                }
+            });
+    }
+
+    render() {
+        this.view.querySelector('#title').innerText = this.title;
+        this.view.querySelector('#loaderWrapper').appendChild(this.loader.view);
+        this.view.querySelector('#printerWrapper').appendChild(this.printer.view);
     }
 
     constructor(app, params) {
@@ -45,21 +46,20 @@ export default class Unit {
 
         if (params['loader']) {
             this.loader = params['loader'];
+            this.loader.injection('app', this.app);
+            this.loader.injection('unit', this);
         };
 
         if (params['printer']) {
             this.printer = params['printer'];
+            this.printer.injection('app', this.app);
+            this.printer.injection('unit', this);
         };
-
-        this.init();
 
         this.view = document.createElement('div');
         this.view.innerHTML = this.template;
 
         this.createTab();
-
-        this.view.querySelector('#title').innerText = this.title;
-        this.view.querySelector('#loaderWrapper').appendChild(this.loader.view);
-        this.view.querySelector('#printerWrapper').appendChild(this.printer.view);
+        this.render();        
     }
 }

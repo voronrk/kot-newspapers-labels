@@ -5,16 +5,6 @@ export default class LoadRG extends Loader {
     separatedData = [];
     labelData = [];
 
-    async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'RG', 'customer': 'РГ', labelName: 'АО "Издательство "Российская газета"'};
-        const response = await fetch ('back.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(params)
-        });
-        return await response.json();
-    }
-
     parse(inputData) {
         let parsedData = {};
         for(let key in inputData) {
@@ -34,16 +24,8 @@ export default class LoadRG extends Loader {
             }            
         }
         data.totalCount = data.totalCount/2;
-        console.log(this.data);
-        this.request('save', [data])
-        .then(result => {
-            if (result > 0) {
-                this.notification.classList.remove('is-hidden');
-                setTimeout(()=> {
-                    location.reload();
-                },500);        
-            };
-        });
+        this.data = [data];
+        this.save();
     }
 
     getFile(e) {
@@ -64,6 +46,4 @@ export default class LoadRG extends Loader {
         });
         reader.readAsArrayBuffer(f);
     };
-
-
 }

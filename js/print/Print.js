@@ -1,6 +1,7 @@
 export default class Print {
 
     template = `
+        <div class="is-hidden" id="main-wrapper">
         <div class="title is-size-5 mt-6">Печать ярлыков</div>
 
         <form class="form mt-4" id="label-form">
@@ -56,17 +57,8 @@ export default class Print {
             </div>
             <button type="submit" class="button is-primary" id="button-print">Печатать</button>        
         </form>
+        </div>
      `;
-
-    async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'village'};
-        const response = await fetch ('back.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(params)
-        });
-        return await response.json();
-    }
 
     async requestRenderLabels() {
         const params={'data': this.printParams};
@@ -77,7 +69,6 @@ export default class Print {
         });
         return await response.json();
     }
-
           
     validate(form) {
       let flag = true;
@@ -128,16 +119,20 @@ export default class Print {
         }
       } else {
         this.selectTitle.innerHTML = `<option value=0>${this.labelData[0].title}</option>`;
+        if(this.labelData[0].totalCount) {
+          this.labelForm.elements.count.value = this.labelData[0].totalCount;
+        };
       }
     }
 
     update(data) {
-      console.log(data);
-      // this.data = data;
       this.date = data.date;
       this.labelData = data.data;
-      this.labelName = data.labelName;
       this.renderTitleSelect();
+    }
+
+    show() {
+      this.view.querySelector('#main-wrapper').classList.remove('is-hidden');
     }
 
     print(view) {
@@ -158,8 +153,13 @@ export default class Print {
               this.print(result);
           });
     }
+
+    injection(key, obj) {
+      this[key] = obj;
+    }
     
     constructor() {
+
       this.view = document.createElement('div');
       this.view.innerHTML = this.template;
 
@@ -172,7 +172,7 @@ export default class Print {
         if (this.validate(this.labelForm.elements)) {
           this.printParams = {
             title: this.labelData[this.labelForm.elements.title.value].title,
-            labelName: this.labelName,
+            labelName: this.unit.labelName,
             num: this.labelForm.elements.num.value,
             orderNum: this.labelForm.elements.ordernum.value,
             date: this.formatDate(this.labelForm.elements.date.value),
@@ -185,5 +185,4 @@ export default class Print {
         }        
       });
     }
-
 }

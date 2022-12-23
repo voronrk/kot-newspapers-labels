@@ -1,10 +1,11 @@
 import LoadVID from './load/LoadVID.js';
 import LoadAifKirov from './load/LoadAifKirov.js';
-import LoadAifKirovKomi from './load/LoadAifKirovKomi.js';
 import LoadRG from './load/LoadRG.js';
 import Print from './print/Print.js';
 import App from './App.js';
 import Unit from './Unit.js';
+
+const appWrapper = document.querySelector('#app');
 
 const unitParams = [
   {
@@ -25,7 +26,7 @@ const unitParams = [
     title: 'АиФ-Киров (Коми)',
     filename: 'aifkirovkomi',
     labelName: 'Аргументы и факты, АО',
-    loader: new LoadAifKirovKomi(),
+    loader: new LoadAifKirov(),
     printer: new Print(),
   },
   {
@@ -36,8 +37,6 @@ const unitParams = [
     printer: new Print(),
   },
 ];
-
-const appWrapper = document.querySelector('#app');
 
 let app = new App();
 appWrapper.appendChild(app.view);

@@ -3,17 +3,6 @@ import Loader from './Loader.js';
 export default class LoadVID extends Loader {
 
     separatedData = [];
-    labelData = [];
-
-    async request(method, data=[]) {
-        const params={'method': method, 'data': data, 'name': 'VID', 'customer': 'Вятский издательский дом', labelName: 'Вятский издательский дом, КОГАУ'};
-        const response = await fetch ('back.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(params)
-        });
-        return await response.json();
-    }
 
     decChar(c) {
         return String.fromCharCode(c.charCodeAt(0) - 1);
@@ -40,17 +29,9 @@ export default class LoadVID extends Loader {
                     this.getColumn(segmentData, key, segment.lastIndex, tmp.data);
                 }
             };
-        this.labelData.push(tmp);
+        this.data.push(tmp);
     }
-    this.request('save', this.labelData)
-        .then(result => {
-            if (result > 0) {
-                this.notification.classList.remove('is-hidden');
-                setTimeout(()=> {
-                    location.reload();
-                },500);        
-            };
-        });
+    this.save();
     }
     
     separateData(inputData) {
