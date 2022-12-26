@@ -28,12 +28,12 @@ export default class LoadRG extends Loader {
         this.save();
     }
 
-    getFile(e) {
-        console.log(e);
-        let data = new Uint8Array(e.target.result);
-        let workbook = XLSX.read(data, {type: 'array'});
-        this.parse(workbook.Sheets['Лист1']);
-    }
+    // getFile(e) {
+    //     console.log(e);
+    //     let data = new Uint8Array(e.target.result);
+    //     let workbook = XLSX.read(data, {type: 'array'});
+    //     this.parse(workbook.Sheets['Лист1']);
+    // }
     
     handleFile(e) {
         this.labelData = [];

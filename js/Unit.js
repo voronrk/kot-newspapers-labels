@@ -1,7 +1,7 @@
 export default class Unit {
     template = `
         <div id="title" class="title is-2"></div>
-        <div id="loaderWrapper" class="field is-grouped"></div>
+        <div id="loadersWrapper" class="field is-grouped"></div>
         <div id="printerWrapper" class="mt-4"></div>        
     `;
 
@@ -25,7 +25,9 @@ export default class Unit {
                 this.data = responce;
                 if(this.data.date) {
                     this.printer.update(this.data);
-                    this.loader.updateDate(this.data.date);
+                    for (let loader of this.loaders) {
+                        loader.updateDate(this.data.date);
+                    }                    
                     this.printer.show();
                 }
             });
@@ -33,7 +35,9 @@ export default class Unit {
 
     render() {
         this.view.querySelector('#title').innerText = this.title;
-        this.view.querySelector('#loaderWrapper').appendChild(this.loader.view);
+        for (let loader of this.loaders) {
+            this.view.querySelector('#loadersWrapper').appendChild(loader.view);
+        };        
         this.view.querySelector('#printerWrapper').appendChild(this.printer.view);
     }
 
@@ -44,10 +48,14 @@ export default class Unit {
         this.fileName = params['filename'];
         this.labelName = params['labelName'];
 
-        if (params['loader']) {
-            this.loader = params['loader'];
-            this.loader.injection('app', this.app);
-            this.loader.injection('unit', this);
+        this.loaders = [];
+
+        if (params['loaders']) {
+            for (let loader of params['loaders']) {
+                loader.injection('app', this.app);
+                loader.injection('unit', this);
+                this.loaders.push(loader);                
+            };
         };
 
         if (params['printer']) {

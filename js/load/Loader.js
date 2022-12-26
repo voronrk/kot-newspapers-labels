@@ -8,7 +8,7 @@ export default class Loader {
 
         const label = document.createElement('label');
         label.classList.add('label');
-        label.innerText = 'Загрузка разнарядки';
+        label.innerText = `Загрузка разнарядки${this.label}`;
         
         this.input = document.createElement('input');
         this.input.classList.add('button');
@@ -58,8 +58,9 @@ export default class Loader {
         this[key] = obj;
       }
 
-    constructor() {
+    constructor(label = '') {
         this.date = 'никогда';
+        this.label = label ? ` (${label})` : '';
         this.render();
     }    
 }

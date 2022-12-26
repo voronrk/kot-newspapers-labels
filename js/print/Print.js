@@ -144,7 +144,7 @@ export default class Print {
               WinPrint.print();
               WinPrint.close();
               this.labelForm.reset();
-          },1500);
+          },3000);
     }
 
     generateLabels() {
