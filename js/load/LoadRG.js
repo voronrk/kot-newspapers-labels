@@ -18,8 +18,8 @@ export default class LoadRG extends Loader {
                 let tmp = {};
                 tmp.title = parsedData[key];
                 let valueKey = key.replace('A','B');
-                tmp.value = parsedData[valueKey];
-                data.totalCount += parseInt(tmp.value);
+                tmp.value = parseInt(parsedData[valueKey]);
+                data.totalCount += tmp.value;
                 data.data.push(tmp);
             }            
         }
@@ -28,13 +28,6 @@ export default class LoadRG extends Loader {
         this.save();
     }
 
-    // getFile(e) {
-    //     console.log(e);
-    //     let data = new Uint8Array(e.target.result);
-    //     let workbook = XLSX.read(data, {type: 'array'});
-    //     this.parse(workbook.Sheets['Лист1']);
-    // }
-    
     handleFile(e) {
         this.labelData = [];
         let files = e.target.files, f = files[0];

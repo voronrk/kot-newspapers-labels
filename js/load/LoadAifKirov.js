@@ -38,6 +38,4 @@ export default class LoadAifKirov extends Loader {
         });
         reader.readAsText(file, 'CP1251');
     };
-
-
 }

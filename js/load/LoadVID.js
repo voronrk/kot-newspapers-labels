@@ -14,7 +14,7 @@ export default class LoadVID extends Loader {
         let index = +key.substring(1);
         for(let i = index + 1; i<=maxIndex; i++) {
             if ((inputData[`${valueChar}${i}`]) && (inputData[`${titleChar}${i}`] != 'Итого:')) {
-            destinationData.push({title: inputData[`${titleChar}${i}`], value: inputData[`${valueChar}${i}`]});
+            destinationData.push({title: inputData[`${titleChar}${i}`], value: parseInt(inputData[`${valueChar}${i}`])});
             };
         }
     }
@@ -90,6 +90,4 @@ export default class LoadVID extends Loader {
         });
         reader.readAsArrayBuffer(f);
     };
-
-
 }

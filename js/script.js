@@ -2,6 +2,7 @@ import LoadVID from './load/LoadVID.js';
 import LoadAifKirov from './load/LoadAifKirov.js';
 import LoadAifKirov5ka from './load/LoadAifKirov5ka.js';
 import LoadRG from './load/LoadRG.js';
+import LoadGold from './load/LoadGold.js';
 import Print from './print/Print.js';
 import App from './App.js';
 import Unit from './Unit.js';

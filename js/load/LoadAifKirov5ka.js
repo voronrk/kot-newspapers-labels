@@ -36,7 +36,6 @@ export default class LoadAifKirov5ka extends Loader {
         this.data = data.data;
         this.save();
     }
-
     
     handleFile(e) {
         this.labelData = [];
