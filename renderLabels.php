@@ -11,6 +11,13 @@ class Handler
 {
 
     private function renderLabelA4($title, $quantity) {
+        if(strlen($title) > 300) {
+            $titleSize = '5';
+        } elseif (strlen($title) > 100) {
+            $titleSize = '4';
+        } else {
+            $titleSize = '3';
+        }
         $view = "
         <table class='table table-A4 is-bordered has-text-centered'>
         <tr>
@@ -19,17 +26,24 @@ class Handler
             <td rowspan='6' class='is-vcentered p-0'><div class='has-text-weight-bold is-size-2 zakaz-A4'>Заказ {$this->orderNum}</div></td>
         </tr>
         <tr><td class='np-title is-size-3'>{$this->labelName}</td></tr>
-        <tr><td class='has-text-weight-bold is-size-1 p-0 np-title'><span>{$this->title}</span><br><span class='has-text-weight-normal'>№ {$this->num} от {$this->date}</span><br><br>{$title}</td></tr>
+        <tr><td class='has-text-weight-bold is-size-1 p-0 np-title'><span>{$this->title}</span><br><span class='has-text-weight-normal'>№ {$this->num} от {$this->date}</span><br><p class=\"is-size-{$titleSize}\">{$title}</p></td></tr>
         <tr><td class='has-text-right np-title is-size-3'>В пачке <span class='is-size-2 has-text-weight-bold'>{$quantity}</span> экз.</td></tr>
         <tr><td class='is-size-4'>ООО 'Элефант'<br>
         Россия, 610004, г. Киров, ул. Ленина, 2Б</td></tr>
-        <tr><td class='has-text-weight-bold is-size-4'>2022</td></tr>        
+        <tr><td class='has-text-weight-bold is-size-4'>{$this->year}</td></tr>        
         </table>
       ";
       return $view;
     }
 
     private function renderLabelA6($title, $quantity) {
+        if(strlen($title) > 300) {
+            $titleSize = '7';
+        } elseif (strlen($title) > 100) {
+            $titleSize = '6';
+        } else {
+            $titleSize = '5';
+        }
         $view = "
         <table class='table table-A6 is-bordered has-text-centered mb-6'>
         <tr>
@@ -38,11 +52,11 @@ class Handler
             <td rowspan='6' class='is-vcentered p-0'><div class='has-text-weight-bold is-size-4 has-text-centered zakaz-A6'>Заказ {$this->orderNum}</div></td>
         </tr>
         <tr><td class='np-title is-size-6'>{$this->labelName}</td></tr>
-        <tr><td class='has-text-weight-bold is-size-4 p-0 np-title'><span>{$this->title}</span><br><span class='has-text-weight-normal'>№ {$this->num} от {$this->date}</span><br><p>{$title}</p></td></tr>
+        <tr><td class='has-text-weight-bold is-size-4 p-0 np-title'><span>{$this->title}</span><br><span class='has-text-weight-normal'>№ {$this->num} от {$this->date}</span><br><p class=\"is-size-{$titleSize}\">{$title}</p></td></tr>
         <tr><td class='has-text-right np-title is-size-5'>В пачке <span class='is-size-4 has-text-weight-bold'>{$quantity}</span> экз.</td></tr>
         <tr><td class='is-size-7'>ООО 'Элефант'<br>
         Россия, 610004, г. Киров, ул. Ленина, 2Б</td></tr>
-        <tr><td class='has-text-weight-bold is-size-6 p-0'>2022</td></tr>        
+        <tr><td class='has-text-weight-bold is-size-6 p-0'>{$this->year}</td></tr>        
         </table>
       ";
       return $view;
@@ -143,6 +157,7 @@ class Handler
         $this->size = $data['size'];
         $this->title = $data['title'];
         $this->totalCount = $data['totalCount'];
+        $this->year = date('Y');
     }
 }
 

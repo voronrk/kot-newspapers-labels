@@ -2,6 +2,7 @@ import LoadVID from './load/LoadVID.js';
 import LoadAifKirov from './load/LoadAifKirov.js';
 import LoadAifKirov5ka from './load/LoadAifKirov5ka.js';
 import LoadRG from './load/LoadRG.js';
+import LoadKirPravda from './load/LoadKirPravda.js';
 import LoadGold from './load/LoadGold.js';
 import Print from './print/Print.js';
 import App from './App.js';
@@ -36,6 +37,13 @@ const unitParams = [
     filename: 'RG',
     labelName: 'АО "Издательство "Российская газета"',
     loaders: [new LoadRG()],
+    printer: new Print(),
+  },
+  {
+    title: 'Кировская правда',
+    filename: 'KirPravda',
+    labelName: 'Вятский издательский дом, КОГАУ',
+    loaders: [new LoadKirPravda()],
     printer: new Print(),
   },
 ];

@@ -155,7 +155,8 @@ export default class Print {
     renderPartSelect(data) {
       this.selectPart.innerHTML = `<option></option>`;
       for(let key in data.data) {
-        this.selectPart.innerHTML += `<option value=${key}>${data.data[key].title ? data.data[key].title : '--Пустой--'}</option>`;
+        let option = (data.data[key].title.length < 50) ? data.data[key].title : data.data[key].title.substring(0,50) + '...';
+        this.selectPart.innerHTML += `<option value=${key}>${data.data[key].title ? option : '--Пустой--'}</option>`;
       }
     }
 

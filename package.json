@@ -1,0 +1,29 @@
+{
+  "name": "septic-forms-pack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "prod": "webpack --mode production",
+    "build": "webpack",
+    "tb": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/voronrk/b24.order.septic-forms.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/voronrk/b24.order.septic-forms/issues"
+  },
+  "homepage": "https://github.com/voronrk/b24.order.septic-forms#readme",
+  "dependencies": {
+    "webpack": "^5.90.3"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  }
+}
