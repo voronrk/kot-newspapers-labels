@@ -29,6 +29,9 @@ export default class LoadKirPravda extends Loader {
             if(parsedData[key] == 'Упаковка тиража:') {
                 begin = true;
             }
+            if(parsedData[key] == 'ИТОГО:') {
+                begin = false;
+            }
         }
         data.totalCount = data.totalCount;
         this.data = [data];

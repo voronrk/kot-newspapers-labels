@@ -1,0 +1,26 @@
+<?php
+$field = 'UF_CRM_1717682516';
+$result = file_get_contents('https://kibra240602.bitrix24.ru/rest/1/xx3c4ax5ymztgqsu/crm.lead.get?id=2');
+echo "<pre>";
+echo print_r($result,true);
+echo "</pre>";
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="select">
+        <select>
+            <option>Select dropdown</option>
+            <option>With options</option>
+        </select>
+    </div>    
+</body>
+</html>
