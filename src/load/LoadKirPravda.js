@@ -17,7 +17,7 @@ export default class LoadKirPravda extends Loader {
         let data = {title: 'Кировская правда', data: [], totalCount: 0};
         for(let key in parsedData) {
             if(key[0]=='A') {
-                if(begin && (parsedData[key] != 'ИТОГО:')) {
+                if(begin && (parsedData[key] != 'ИТОГО:') && (parsedData[key] != 'Итого')) {
                     let tmp = {};
                     tmp.title = parsedData[key];
                     let valueKey = key.replace('A','B');
@@ -29,7 +29,7 @@ export default class LoadKirPravda extends Loader {
             if(parsedData[key] == 'Упаковка тиража:') {
                 begin = true;
             }
-            if(parsedData[key] == 'ИТОГО:') {
+            if((parsedData[key] == 'ИТОГО:') || (parsedData[key] == 'Итого')) {
                 begin = false;
             }
         }
